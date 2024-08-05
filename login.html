@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.0/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <h1>Login with MetaMask</h1>
+    <button id="loginButton">Login with MetaMask</button>
+    <p id="status"></p>
+    <script>
+        document.getElementById('loginButton').addEventListener('click', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    if (accounts.length > 0) {
+                        localStorage.setItem('userAccount', accounts[0]);
+                        window.location.href = 'transfer.html';  // Redirect to transfer page
+                    }
+                } catch (error) {
+                    document.getElementById('status').innerText = 'User rejected the request or an error occurred.';
+                }
+            } else {
+                document.getElementById('status').innerText = 'MetaMask is not installed.';
+            }
+        });
+    </script>
+</body>
+</html>
